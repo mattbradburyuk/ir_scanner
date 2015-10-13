@@ -5,12 +5,12 @@ classdef AppWindow < handle
     properties
 
         parent_
-        world
         ui_position_
         main_axes
-        simulator
         min_x
         max_x
+        min_y
+        max_y
         
     end
     
@@ -30,29 +30,16 @@ classdef AppWindow < handle
             
             obj.min_x = -5;
             obj.max_x = 5;
+            obj.min_y = -5;
+            obj.max_y = 5;
             
             obj.main_axes.XLim = [obj.min_x,obj.max_x];
-            obj.main_axes.YLim = [-5,5];
+            obj.main_axes.YLim = [obj.min_y,obj.max_y];
             hold on;
             
-            obj.world = World(obj.main_axes);
-            obj.world.add_robot();
-            
-            obj.simulator = Sim(obj,obj.world,0.01);
 
-            set(obj.parent_, 'CloseRequestFcn', @obj.ui_close);
         end
-%        
 
-        function ui_close(obj, src, event)
-
-            fprintf('window shut\n');
-            %             if(obj.is_ready_)
-%                 obj.simulator_.shutdown();
-            stop(obj.simulator.clock);
-            delete(obj.simulator.clock);
-            delete(obj.parent_);
-        end
 
     end
 end
