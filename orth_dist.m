@@ -37,28 +37,28 @@ function [od_exists, min_orth_dist ] = orth_dist(A,B)
     % calculate translation and rotation to take vector a to the origin
     % pointing in x direction
     
-    a1 =A(:,1)
-    a2 =A(:,2)
+    a1 =A(:,1);
+    a2 =A(:,2);
     
-    trans = - a1 % translation  
+    trans = - a1; % translation  
     
-    a_t = a2 + trans % translated path section
+    a_t = a2 + trans; % translated path section
     
-    theta = atan2(a_t(2),a_t(1)) % angle of a_p against the x axis
+    theta = atan2(a_t(2),a_t(1)); % angle of a_p against the x axis
     
     % matrix to rotate a_p to line up against the x axis
-    R = [cos(-theta), - sin(-theta); sin(-theta), cos(-theta)]
+    R = [cos(-theta), - sin(-theta); sin(-theta), cos(-theta)];
     
 
     % apply same translation and rotation to B matrix
     
     % translation
     
-    B_t = B + repmat(trans,1,sB) 
+    B_t = B + repmat(trans,1,sB); 
     
     % rotation
     
-    B_tr = R * B_t
+    B_tr = R * B_t;
     
 
     for i = 1:(sB -1) % itterates through each start/end pair in the list of points
@@ -78,7 +78,7 @@ function [od_exists, min_orth_dist ] = orth_dist(A,B)
             % if start coord => x1,y1 and end coords => x2,y2
             % y1 + (y2 - y1) * |x1| / (|x1| + |x2|)
             
-            orth_dists(2,i) = B_tr(2,i) + (B_tr(2,i+1) - B_tr(2,i)) * abs(B_tr(1,i)) / (abs(B_tr(1,i)) + abs(B_tr(1,i+1)));
+            orth_dists(2,i) =abs( B_tr(2,i) + (B_tr(2,i+1) - B_tr(2,i)) * abs(B_tr(1,i)) / (abs(B_tr(1,i)) + abs(B_tr(1,i+1))));
             
         else
             orth_dists(1,i) = 0; % mark up as true that a ortoganal cross exists
@@ -87,18 +87,14 @@ function [od_exists, min_orth_dist ] = orth_dist(A,B)
             
         end
         
-        fprintf('Orthaganol cross: %d, distance: %0.3f\n',orth_dists(1,i),orth_dists(2,i));
+%         fprintf('Orthaganol cross: %d, distance: %0.3f\n',orth_dists(1,i),orth_dists(2,i));
     end
-    
-    orth_dists
     
     if sum(orth_dists(1,:)) >= 1
         od_exists = 1;   
         min_orth_dist = min(orth_dists(2,:));
     
     end
-    
-    
     
 end
 
