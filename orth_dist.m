@@ -87,7 +87,6 @@ function [od_exists, min_orth_dist ] = orth_dist(A,B)
             
         end
         
-        
         fprintf('Orthaganol cross: %d, distance: %0.3f\n',orth_dists(1,i),orth_dists(2,i));
     end
     
